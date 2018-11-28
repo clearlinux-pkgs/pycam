@@ -4,7 +4,7 @@
 #
 Name     : pycam
 Version  : 0.6.3
-Release  : 2
+Release  : 3
 URL      : https://github.com/SebKuzminsky/pycam/archive/v0.6.3.tar.gz
 Source0  : https://github.com/SebKuzminsky/pycam/archive/v0.6.3.tar.gz
 Summary  : No detailed summary available
@@ -14,8 +14,8 @@ Requires: pycam-bin = %{version}-%{release}
 Requires: pycam-data = %{version}-%{release}
 Requires: pycam-license = %{version}-%{release}
 Requires: pycam-python = %{version}-%{release}
-Requires: pycam-python3 = %{version}-%{release}
 Requires: enum34
+BuildRequires : buildreq-distutils
 BuildRequires : buildreq-distutils3
 
 %description
@@ -41,6 +41,15 @@ Group: Data
 data components for the pycam package.
 
 
+%package legacypython
+Summary: legacypython components for the pycam package.
+Group: Default
+Requires: python-core
+
+%description legacypython
+legacypython components for the pycam package.
+
+
 %package license
 Summary: license components for the pycam package.
 Group: Default
@@ -52,19 +61,9 @@ license components for the pycam package.
 %package python
 Summary: python components for the pycam package.
 Group: Default
-Requires: pycam-python3 = %{version}-%{release}
 
 %description python
 python components for the pycam package.
-
-
-%package python3
-Summary: python3 components for the pycam package.
-Group: Default
-Requires: python3-core
-
-%description python3
-python3 components for the pycam package.
 
 
 %prep
@@ -75,17 +74,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1543218314
-python3 setup.py build
+export SOURCE_DATE_EPOCH=1543402707
+python2 setup.py build -b py2
 
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/pycam
 cp COPYING.TXT %{buildroot}/usr/share/package-licenses/pycam/COPYING.TXT
-python3 -tt setup.py build  install --root=%{buildroot}
-echo ----[ mark ]----
-cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
-echo ----[ mark ]----
+cp debian/copyright %{buildroot}/usr/share/package-licenses/pycam/debian_copyright
+python2 -tt setup.py build -b py2 install --root=%{buildroot}
 
 %files
 %defattr(-,root,root,-)
@@ -226,13 +223,14 @@ echo ----[ mark ]----
 /usr/share/pycam/ui/visible.svg
 /usr/share/pycam/ui/visible_off.svg
 
+%files legacypython
+%defattr(-,root,root,-)
+/usr/lib/python2*/*
+
 %files license
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/pycam/COPYING.TXT
+/usr/share/package-licenses/pycam/debian_copyright
 
 %files python
 %defattr(-,root,root,-)
-
-%files python3
-%defattr(-,root,root,-)
-/usr/lib/python3*/*
