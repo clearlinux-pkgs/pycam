@@ -4,7 +4,7 @@
 #
 Name     : pycam
 Version  : 0.6.3
-Release  : 3
+Release  : 4
 URL      : https://github.com/SebKuzminsky/pycam/archive/v0.6.3.tar.gz
 Source0  : https://github.com/SebKuzminsky/pycam/archive/v0.6.3.tar.gz
 Summary  : No detailed summary available
@@ -17,6 +17,7 @@ Requires: pycam-python = %{version}-%{release}
 Requires: enum34
 BuildRequires : buildreq-distutils
 BuildRequires : buildreq-distutils3
+Patch1: update.patch
 
 %description
 The fonts delivered with PyCAM are taken from QCAD:
@@ -68,13 +69,14 @@ python components for the pycam package.
 
 %prep
 %setup -q -n pycam-0.6.3
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1543402707
+export SOURCE_DATE_EPOCH=1543733464
 python2 setup.py build -b py2
 
 %install
@@ -90,13 +92,14 @@ python2 -tt setup.py build -b py2 install --root=%{buildroot}
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/pycam
+/usr/bin/pycam-cli
 
 %files data
 %defattr(-,root,root,-)
 /usr/share/pycam/DXF.gpl
 /usr/share/pycam/doc/COPYING.TXT
 /usr/share/pycam/doc/Changelog
-/usr/share/pycam/doc/INSTALL.TXT
+/usr/share/pycam/doc/INSTALL.md
 /usr/share/pycam/doc/LICENSE.TXT
 /usr/share/pycam/doc/README.md
 /usr/share/pycam/doc/release_info.txt
@@ -158,7 +161,6 @@ python2 -tt setup.py build -b py2 install --root=%{buildroot}
 /usr/share/pycam/samples/polygon4.svg
 /usr/share/pycam/samples/polygon5.svg
 /usr/share/pycam/samples/polygons.svg
-/usr/share/pycam/samples/problem.conf
 /usr/share/pycam/samples/problem_1_triangle.stl
 /usr/share/pycam/samples/pycam-text.dxf
 /usr/share/pycam/samples/pycam-textbox.scad
@@ -166,10 +168,12 @@ python2 -tt setup.py build -b py2 install --root=%{buildroot}
 /usr/share/pycam/samples/pycam.stl
 /usr/share/pycam/samples/pycam_text_2d.svg
 /usr/share/pycam/samples/rectangle.svg
+/usr/share/pycam/samples/simple-shapes.dxf
 /usr/share/pycam/samples/sled.stl
 /usr/share/pycam/ui/bounds.ui
 /usr/share/pycam/ui/clipboard.ui
 /usr/share/pycam/ui/emc_tool_export.ui
+/usr/share/pycam/ui/export_settings.ui
 /usr/share/pycam/ui/extrusion_chamfer.png
 /usr/share/pycam/ui/extrusion_radius_down.png
 /usr/share/pycam/ui/extrusion_radius_up.png
@@ -215,7 +219,6 @@ python2 -tt setup.py build -b py2 install --root=%{buildroot}
 /usr/share/pycam/ui/toolpath_crop.ui
 /usr/share/pycam/ui/toolpath_export.ui
 /usr/share/pycam/ui/toolpath_grid.ui
-/usr/share/pycam/ui/toolpath_processors.ui
 /usr/share/pycam/ui/toolpath_simulation.ui
 /usr/share/pycam/ui/toolpaths.ui
 /usr/share/pycam/ui/tools.ui
