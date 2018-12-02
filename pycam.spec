@@ -4,7 +4,7 @@
 #
 Name     : pycam
 Version  : 0.6.3
-Release  : 6
+Release  : 7
 URL      : https://github.com/SebKuzminsky/pycam/archive/v0.6.3.tar.gz
 Source0  : https://github.com/SebKuzminsky/pycam/archive/v0.6.3.tar.gz
 Summary  : No detailed summary available
@@ -16,7 +16,6 @@ Requires: pycam-license = %{version}-%{release}
 Requires: pycam-python = %{version}-%{release}
 Requires: pycam-python3 = %{version}-%{release}
 Requires: enum34
-BuildRequires : buildreq-distutils23
 BuildRequires : buildreq-distutils3
 BuildRequires : pygtk-legacypython
 BuildRequires : pygtkglext-legacypython
@@ -43,15 +42,6 @@ Group: Data
 
 %description data
 data components for the pycam package.
-
-
-%package legacypython
-Summary: legacypython components for the pycam package.
-Group: Default
-Requires: python-core
-
-%description legacypython
-legacypython components for the pycam package.
 
 
 %package license
@@ -89,18 +79,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1543765186
-python2 setup.py build -b py2
-python3 setup.py build -b py3
+export SOURCE_DATE_EPOCH=1543765376
+python3 setup.py build
 
 %install
-export SOURCE_DATE_EPOCH=1543765186
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/pycam
 cp COPYING.TXT %{buildroot}/usr/share/package-licenses/pycam/COPYING.TXT
 cp debian/copyright %{buildroot}/usr/share/package-licenses/pycam/debian_copyright
-python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
-python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
+python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
@@ -244,10 +231,6 @@ echo ----[ mark ]----
 /usr/share/pycam/ui/units.ui
 /usr/share/pycam/ui/visible.svg
 /usr/share/pycam/ui/visible_off.svg
-
-%files legacypython
-%defattr(-,root,root,-)
-/usr/lib/python2*/*
 
 %files license
 %defattr(0644,root,root,0755)
