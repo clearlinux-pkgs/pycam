@@ -4,7 +4,7 @@
 #
 Name     : pycam
 Version  : 0.6.3
-Release  : 4
+Release  : 5
 URL      : https://github.com/SebKuzminsky/pycam/archive/v0.6.3.tar.gz
 Source0  : https://github.com/SebKuzminsky/pycam/archive/v0.6.3.tar.gz
 Summary  : No detailed summary available
@@ -17,6 +17,8 @@ Requires: pycam-python = %{version}-%{release}
 Requires: enum34
 BuildRequires : buildreq-distutils
 BuildRequires : buildreq-distutils3
+BuildRequires : pygtk-legacypython
+BuildRequires : pygtkglext-legacypython
 Patch1: update.patch
 
 %description
@@ -76,7 +78,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1543733464
+export SOURCE_DATE_EPOCH=1543764302
 python2 setup.py build -b py2
 
 %install
