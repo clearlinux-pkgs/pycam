@@ -4,7 +4,7 @@
 #
 Name     : pycam
 Version  : 0.6.3
-Release  : 7
+Release  : 8
 URL      : https://github.com/SebKuzminsky/pycam/archive/v0.6.3.tar.gz
 Source0  : https://github.com/SebKuzminsky/pycam/archive/v0.6.3.tar.gz
 Summary  : No detailed summary available
